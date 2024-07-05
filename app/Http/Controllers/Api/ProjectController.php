@@ -18,4 +18,17 @@ class ProjectController extends Controller
             'results' => $projects
         ]);
     }
+
+    public function show($slug) {
+        //dd($slug);
+        $project = Project::where('slug', '=', $slug)->with('type', 'technologies')->first();    // first per fermarsi al primo risultato trovato
+        //dd($project);
+
+        $apiData = [
+            'success' => true,
+            'project' => $project
+        ];
+
+        return response()->json($apiData);
+    }
 }
