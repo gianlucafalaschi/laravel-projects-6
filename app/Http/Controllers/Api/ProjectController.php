@@ -24,11 +24,20 @@ class ProjectController extends Controller
         $project = Project::where('slug', '=', $slug)->with('type', 'technologies')->first();    // first per fermarsi al primo risultato trovato
         //dd($project);
 
-        $apiData = [
-            'success' => true,
-            'project' => $project
-        ];
-
+        $apiData = [];
+        // se il project c'è 
+        if($project) {
+            $apiData = [
+                'success' => true,
+                'project' => $project
+            ];
+        //se il project non c'è (slug sbagliato)
+        } else {
+            $apiData = [
+                'success' => false,
+                'error' => 'no project found with this slug'
+            ];
+        }
         return response()->json($apiData);
     }
 }
